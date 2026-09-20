@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>许愿成功</title>
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: "Noto Sans SC", Arial, sans-serif;
+            background: radial-gradient(circle at top, #1f3a8a 0%, #11204a 40%, #050816 100%);
+            min-height:100vh;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            padding:20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+        /* 星空闪烁，和首页保持一致 */
+        .stars {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background-image:
+                radial-gradient(2px 2px at 20% 30%, #fff, transparent),
+                radial-gradient(1px 1px at 60% 70%, #fff, transparent),
+                radial-gradient(1px 1px at 80% 20%, #ffe27a, transparent),
+                radial-gradient(2px 2px at 40% 80%, #fff, transparent),
+                radial-gradient(1px 1px at 90% 50%, #b6e3ff, transparent),
+                radial-gradient(1px 1px at 10% 60%, #fff, transparent);
+            background-size: 200px 200px;
+            animation: twinkle 6s ease-in-out infinite alternate;
+        }
+        @keyframes twinkle {
+            from { opacity: 0.7; }
+            to { opacity: 1; }
+        }
+        .box{
+            position: relative;
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(14px);
+            padding:40px 30px;
+            border-radius:24px;
+            max-width:500px;
+            text-align:center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+        }
+        h2{
+            font-family: "Ma Shan Zheng", cursive;
+            font-size:36px;
+            background: linear-gradient(90deg, #ffe9a8, #ffb347, #ff7ab6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom:20px;
+            letter-spacing:4px;
+        }
+        p{
+            line-height:1.8;
+            font-size:17px;
+            color:#f5f8ff;
+            margin-bottom:30px;
+        }
+        .back-btn{
+            padding:12px 28px;
+            background: linear-gradient(90deg, #ff9a3c, #ff4d6d);
+            color:#fff;
+            border:none;
+            border-radius:999px;
+            font-size:16px;
+            font-weight:700;
+            letter-spacing:2px;
+            cursor:pointer;
+            box-shadow: 0 10px 24px rgba(255, 77, 109, 0.45);
+            transition: transform 0.3s ease;
+        }
+        .back-btn:hover{
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="box">
+        <h2>愿望收好啦 ✨</h2>
+        <p>你的心愿已经悄悄保存，<br>愿所有美好慢慢向你奔赴而来。<br>再次祝你生日快乐！</p>
+        <a href="index.html">
+            <button class="back-btn">返回贺卡</button>
+        </a>
+    </div>
+</body>
+</html>
