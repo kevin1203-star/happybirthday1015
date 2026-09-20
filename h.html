@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>生日快乐</title>
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Noto Sans SC", Arial, sans-serif;
+            color: #fff;
+            background: radial-gradient(circle at top, #1f3a8a 0%, #11204a 40%, #050816 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* 星空背景层 */
+        .stars {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background-image:
+                radial-gradient(2px 2px at 20% 30%, #fff, transparent),
+                radial-gradient(1px 1px at 60% 70%, #fff, transparent),
+                radial-gradient(1px 1px at 80% 20%, #ffe27a, transparent),
+                radial-gradient(2px 2px at 40% 80%, #fff, transparent),
+                radial-gradient(1px 1px at 90% 50%, #b6e3ff, transparent),
+                radial-gradient(1px 1px at 10% 60%, #fff, transparent);
+            background-size: 200px 200px;
+            animation: twinkle 6s ease-in-out infinite alternate;
+        }
+
+        @keyframes twinkle {
+            from { opacity: 0.7; }
+            to { opacity: 1; }
+        }
+
+        /* 烟花画布 */
+        #fireworks {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* 飘落纸屑 */
+        .confetti {
+            position: fixed;
+            top: -20px;
+            width: 10px;
+            height: 14px;
+            opacity: 0.9;
+            z-index: 2;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh) rotate(720deg);
+            }
+        }
+
+        /* 主内容 */
+        .main {
+            position: relative;
+            z-index: 3;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 60px 24px 80px;
+            text-align: center;
+        }
+
+        .title {
+            font-family: "Ma Shan Zheng", "Noto Sans SC", cursive;
+            font-size: clamp(40px, 9vw, 72px);
+            letter-spacing: 8px;
+            background: linear-gradient(90deg, #ffe9a8, #ffb347, #ff7ab6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 30px rgba(255, 210, 120, 0.35);
+            margin-bottom: 12px;
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: titleIn 1.2s ease forwards;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #cfe3ff;
+            letter-spacing: 4px;
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeIn 1.5s ease forwards 0.4s;
+        }
+
+        /* 蛋糕区 */
+        .cake-section {
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeIn 1.5s ease forwards 0.6s;
+        }
+
+        .cake-img {
+            width: 240px;
+            max-width: 70%;
+            filter: drop-shadow(0 10px 24px rgba(255, 180, 90, 0.45));
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .wish-btn {
+            display: inline-block;
+            margin-top: 18px;
+            padding: 12px 28px;
+            border-radius: 999px;
+            border: none;
+            background: linear-gradient(90deg, #ff9a3c, #ff4d6d);
+            color: #fff;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            cursor: pointer;
+            box-shadow: 0 10px 24px rgba(255, 77, 109, 0.45);
+            transition: transform 0.3s ease;
+        }
+
+        .wish-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        /* 贺卡 */
+        .card {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 24px;
+            padding: 36px 28px;
+            backdrop-filter: blur(14px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+            text-align: left;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: cardIn 1.5s ease forwards 0.9s;
+        }
+
+        .card p {
+            font-size: 16px;
+            line-height: 2;
+            color: #f5f8ff;
+            margin-bottom: 14px;
+            text-indent: 2em;
+        }
+
+        .card .greeting-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #ffd86b;
+            text-indent: 0;
+            margin-bottom: 18px;
+        }
+
+        .card .signature {
+            text-align: right;
+            color: #cfe3ff;
+            text-indent: 0;
+            margin-top: 24px;
+        }
+
+        /* 蜡烛倒计时 */
+        .candles {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            opacity: 0;
+            animation: fadeIn 1.5s ease forwards 1.2s;
+        }
+
+        .candle {
+            width: 14px;
+            height: 60px;
+            background: linear-gradient(180deg, #ffd166, #ff9a3c);
+            border-radius: 6px;
+            position: relative;
+            box-shadow: 0 0 12px rgba(255, 170, 70, 0.6);
+        }
+
+        .candle::before {
+            content: "";
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 14px;
+            height: 18px;
+            background: radial-gradient(circle at 50% 40%, #fff6c2, #ff9a3c 60%, #ff4d6d);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            animation: flame 0.3s ease-in-out infinite alternate;
+        }
+
+        @keyframes flame {
+            from { transform: translateX(-50%) scale(1); }
+            to { transform: translateX(-50%) scale(1.15); }
+        }
+
+        /* 动画 */
+        @keyframes titleIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes cardIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        /* 响应式 */
+        @media (max-width: 600px) {
+            .card {
+                padding: 28px 20px;
+            }
+
+            .card p {
+                font-size: 15px;
+            }
+
+            .candles {
+                gap: 10px;
+            }
+
+            .candle {
+                width: 10px;
+                height: 46px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars"></div>
+    <canvas id="fireworks"></canvas>
+
+    <div class="main">
+        <h1 class="title">生日快乐</h1>
+        <p class="subtitle">HAPPY BIRTHDAY · 许下心愿，闪闪发光</p>
+
+        <div class="cake-section">
+            <img class="cake-img" src="https://i.ibb.co/jPQGWsLV/Camera-XHS-1767015404692-1.jpg" alt="生日蛋糕" />
+            <br />
+            <!-- 修改：点击跳转到 wish.html -->
+            <button class="wish-btn" onclick="location.href='wish.html'">✨ 许个愿</button>
+        </div>
+
+        <div class="card">
+            <p class="greeting-title">to 我的朋友：</p>
+
+            <p>今天是专属于你的日子。愿新的一岁，你被温柔包围，被幸运偏爱，被这个世界认真地爱着。愿你眼里有光，心中有梦，脚下有路，身边一直有温暖。</p>
+
+            <p>很庆幸生命里有你这样的朋友。不用每天联系，却总在重要时刻想起彼此；不用刻意解释，也能懂对方那些没说出口的情绪。时间会过去，但真正的情谊不会。</p>
+
+            <p>新的一岁，愿你更勇敢，也更自由。去做想做的事，去成为想成为的人，去把普通的日子过成值得回忆的样子。就算遇到风雨，也别忘了你比自己想象中更有力量。</p>
+
+            <p>愿你平安、健康、快乐。愿所有美好，都如约而至。</p>
+            <p class="signature">—— Your friend</p>
+            <p class="signature">生日当天</p>
+        </div>
+
+        <div class="candles" id="candles"></div>
+    </div>
+
+    <script>
+        // 生成蜡烛数量
+        const candlesContainer = document.getElementById("candles");
+        const candleCount = 7;
+        for (let i = 0; i < candleCount; i++) {
+            const candle = document.createElement("div");
+            candle.className = "candle";
+            candlesContainer.appendChild(candle);
+        }
+
+        // 烟花效果
+        const canvas = document.getElementById("fireworks");
+        const ctx = canvas.getContext("2d");
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener("resize", resizeCanvas);
+
+        class Particle {
+            constructor(x, y, color) {
+                this.x = x;
+                this.y = y;
+                this.speedX = (Math.random() - 0.5) * 6;
+                this.speedY = (Math.random() - 0.5) * 6;
+                this.color = color;
+                this.life = 100;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.speedY += 0.04;
+                this.life--;
+            }
+            draw() {
+                ctx.globalAlpha = this.life / 100;
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function createFirework(x, y) {
+            const colors = ["#ff4d6d", "#ffd166", "#ff9a3c", "#b6e3ff", "#c780fa", "#7affc1"];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            for (let i = 0; i < 60; i++) {
+                particles.push(new Particle(x, y, color));
+            }
+        }
+
+        function animateFireworks() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles = particles.filter(p => p.life > 0);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateFireworks);
+        }
+        animateFireworks();
+
+        // 自动烟花
+        setInterval(() => {
+            const x = Math.random() * canvas.width;
+            const y = canvas.height * 0.2 + Math.random() * canvas.height * 0.3;
+            createFirework(x, y);
+        }, 1200);
+
+        // 点击烟花
+        document.addEventListener("click", (e) => {
+            createFirework(e.clientX, e.clientY);
+        });
+
+        // 许愿按钮函数删掉，直接跳转页面
+        /*
+        function makeAWish() {
+            for (let i = 0; i < 4; i++) {
+                setTimeout(() => {
+                    const x = canvas.width / 2 + (Math.random() - 0.5) * 200;
+                    const y = canvas.height * 0.3 + Math.random() * 100;
+                    createFirework(x, y);
+                }, i * 300);
+            }
+        }
+        */
+
+        // 生成彩色纸屑
+        function createConfetti() {
+            const confetti = document.createElement("div");
+            confetti.className = "confetti";
+            confetti.style.left = Math.random() * 100 + "vw";
+            confetti.style.background = ["#ff4d6d", "#ffd166", "#ff9a3c", "#b6e3ff", "#c780fa"][Math.floor(Math.random() * 5)];
+            confetti.style.animationDuration = (3 + Math.random() * 3) + "s";
+            document.body.appendChild(confetti);
+            setTimeout(() => confetti.remove(), 6000);
+        }
+
+        setInterval(createConfetti, 300);
+    </script>
+</body>
+</html>
