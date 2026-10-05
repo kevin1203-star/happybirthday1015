@@ -3,98 +3,190 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>许愿成功</title>
-    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>💌 心愿已收下</title>
+    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Noto+Sans+SC:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
         }
-        body {
-            font-family: "Noto Sans SC", Arial, sans-serif;
-            background: radial-gradient(circle at top, #1f3a8a 0%, #11204a 40%, #050816 100%);
+        body{
+            font-family:"Noto Sans SC", system-ui;
+            background: radial-gradient(ellipse at top left, #fff3ec 0%, #ffe9df 50%, #ffdfd3 100%);
             min-height:100vh;
             display:flex;
             align-items:center;
             justify-content:center;
-            padding:20px;
-            position: relative;
-            overflow-x: hidden;
+            padding:24px;
+            position:relative;
+            overflow:hidden;
         }
-        /* 星空闪烁，和首页保持一致 */
-        .stars {
+        /* 花瓣 */
+        .petal {
             position: fixed;
-            inset: 0;
-            z-index: 0;
-            background-image:
-                radial-gradient(2px 2px at 20% 30%, #fff, transparent),
-                radial-gradient(1px 1px at 60% 70%, #fff, transparent),
-                radial-gradient(1px 1px at 80% 20%, #ffe27a, transparent),
-                radial-gradient(2px 2px at 40% 80%, #fff, transparent),
-                radial-gradient(1px 1px at 90% 50%, #b6e3ff, transparent),
-                radial-gradient(1px 1px at 10% 60%, #fff, transparent);
-            background-size: 200px 200px;
-            animation: twinkle 6s ease-in-out infinite alternate;
+            top:-24px;
+            width:14px;
+            height:18px;
+            border-radius: 50% 0 50% 50%;
+            opacity:0.62;
+            z-index:1;
+            animation: petalFall linear infinite;
         }
-        @keyframes twinkle {
-            from { opacity: 0.7; }
-            to { opacity: 1; }
+        @keyframes petalFall {
+            0% {transform: translateY(-10vh) rotate(0deg);}
+            100% { transform: translateY(110vh) rotate(1080deg); }
         }
-        .box{
-            position: relative;
-            z-index: 2;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            backdrop-filter: blur(14px);
-            padding:40px 30px;
-            border-radius:24px;
-            max-width:500px;
+
+        /* 背景柔光晕 */
+        .glow-circle-1{
+            position:fixed;
+            width:320px;
+            height:320px;
+            border-radius:50%;
+            background:rgba(255,178,158,0.22);
+            filter:blur(60px);
+            top:10%;
+            left:-80px;
+            z-index:0;
+        }
+        .glow-circle-2{
+            position:fixed;
+            width:260px;
+            height:260px;
+            border-radius:50%;
+            background:rgba(255,155,180,0.18);
+            filter:blur(60px);
+            bottom:15%;
+            right:-60px;
+            z-index:0;
+        }
+
+        .wish-card{
+            position:relative;
+            z-index:3;
+            background:rgba(255,255,255,0.72);
+            backdrop-filter: blur(18px);
+            border-radius:36px;
+            max-width:540px;
+            width:100%;
+            padding:52px 40px;
             text-align:center;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+            box-shadow:
+                0 24px 60px rgba(170,115,105,0.16),
+                inset 0 1px 0 rgba(255,255,255,0.9);
+            border: double 2px transparent;
+            background-image: linear-gradient(rgba(255,255,255,0.72),rgba(255,255,255,0.72)),
+                              linear-gradient(120deg,#ffb87b,#ff7d94,#ff98b9);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+            opacity:0;
+            transform: scale(0.92);
+            animation: cardShow 1.2s ease-out forwards;
         }
+        /* 角落装饰圆点 */
+        .dot-decor{
+            position:absolute;
+            width:10px;
+            height:10px;
+            border-radius:50%;
+            background:#ffb4bc;
+        }
+        .dot1{top:24px;left:24px;}
+        .dot2{top:24px;right:24px;}
+        .dot3{bottom:24px;left:24px;}
+        .dot4{bottom:24px;right:24px;}
+
         h2{
-            font-family: "Ma Shan Zheng", cursive;
-            font-size:36px;
-            background: linear-gradient(90deg, #ffe9a8, #ffb347, #ff7ab6);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom:20px;
+            font-family:"ZCOOL KuaiLe", cursive;
+            font-size:42px;
+            background:linear-gradient(90deg,#ff5e7c,#ff9460,#ffbc70);
+            -webkit-background-clip:text;
+            background-clip:text;
+            color:transparent;
+            margin-bottom:24px;
             letter-spacing:4px;
         }
-        p{
-            line-height:1.8;
+        .desc-text{
             font-size:17px;
-            color:#f5f8ff;
-            margin-bottom:30px;
+            line-height:2;
+            color:#583c3e;
+            margin-bottom:38px;
         }
-        .back-btn{
-            padding:12px 28px;
-            background: linear-gradient(90deg, #ff9a3c, #ff4d6d);
-            color:#fff;
+        .return-btn{
+            padding:15px 38px;
             border:none;
             border-radius:999px;
+            background:linear-gradient(135deg,#ff6b78,#ff4e72);
+            color:#ffffff;
             font-size:16px;
-            font-weight:700;
+            font-weight:600;
             letter-spacing:2px;
             cursor:pointer;
-            box-shadow: 0 10px 24px rgba(255, 77, 109, 0.45);
-            transition: transform 0.3s ease;
+            box-shadow:0 12px 30px rgba(255,110,120,0.30);
+            transition: all 0.3s ease;
         }
-        .back-btn:hover{
-            transform: translateY(-3px);
+        .return-btn:hover{
+            transform: translateY(-5px);
+            box-shadow:0 18px 40px rgba(255,110,120,0.38);
+        }
+
+        @keyframes cardShow {
+            to {
+                opacity:1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes petalFall {
+            0% {transform: translateY(-10vh) rotate(0deg);}
+            100% { transform: translateY(110vh) rotate(1080deg); }
+        }
+
+        @media(max-width:520px){
+            .wish-card{
+                padding:40px 26px;
+            }
+            h2{
+                font-size:34px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="stars"></div>
-    <div class="box">
-        <h2>愿望收好啦 ✨</h2>
-        <p>你的心愿已经悄悄保存，<br>愿所有美好慢慢向你奔赴而来。<br>再次祝你生日快乐！</p>
-        <a href="index.html">
-            <button class="back-btn">返回贺卡</button>
+    <div class="glow-circle-1"></div>
+    <div class="glow-circle-2"></div>
+    <div id="petalContainer"></div>
+
+    <div class="wish-card">
+        <span class="dot-decor dot1"></span>
+        <span class="dot-decor dot2"></span>
+        <span class="dot-decor dot3"></span>
+        <span class="dot-decor dot4"></span>
+
+        <h2>你的心愿我收下啦 💌</h2>
+        <p class="desc-text">
+            所有美好的期许，我都替你好好珍藏。<br>
+            往后岁岁年年，我都会陪在你的身旁。<br>
+            愿我的女孩平安喜乐，被爱意紧紧包围。<br>
+            生日快乐，我的爱人。
+        </p>
+        <a href="h.html">
+            <button class="return-btn">返回贺卡</button>
         </a>
     </div>
+
+    <script>
+        function genPetal(){
+            const p = document.createElement("div");
+            p.className = "petal";
+            p.style.left = Math.random()*100 + "vw";
+            p.style.background = ["#ffb8c1","#ffd2b3","#ffc4d8","#ffd7cd"][Math.floor(Math.random()*4)];
+            p.style.animationDuration = (4 + Math.random()*4)+"s";
+            document.body.appendChild(p);
+            setTimeout(()=>p.remove(),8000);
+        }
+        setInterval(genPetal,280);
+    </script>
 </body>
 </html>
