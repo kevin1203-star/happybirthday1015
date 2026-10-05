@@ -3,391 +3,220 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>生日快乐</title>
-    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>🎂 致我的女孩，生日快乐</title>
+    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Noto+Sans+SC:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
-            font-family: "Noto Sans SC", Arial, sans-serif;
-            color: #fff;
-            background: radial-gradient(circle at top, #1f3a8a 0%, #11204a 40%, #050816 100%);
+            font-family: "Noto Sans SC", system-ui, sans-serif;
+            color: #442c2e;
+            background: radial-gradient(ellipse at top left, #fff3ec 0%, #ffe9df 50%, #ffdfd3 100%);
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
         }
 
-        /* 星空背景层 */
-        .stars {
+        /* 飘落花瓣 */
+        .petal {
             position: fixed;
-            inset: 0;
-            z-index: 0;
-            background-image:
-                radial-gradient(2px 2px at 20% 30%, #fff, transparent),
-                radial-gradient(1px 1px at 60% 70%, #fff, transparent),
-                radial-gradient(1px 1px at 80% 20%, #ffe27a, transparent),
-                radial-gradient(2px 2px at 40% 80%, #fff, transparent),
-                radial-gradient(1px 1px at 90% 50%, #b6e3ff, transparent),
-                radial-gradient(1px 1px at 10% 60%, #fff, transparent);
-            background-size: 200px 200px;
-            animation: twinkle 6s ease-in-out infinite alternate;
+            top:-24px;
+            width:14px;
+            height:18px;
+            border-radius: 50% 0 50% 50%;
+            opacity:0.65;
+            z-index:1;
+            animation: petalFall linear infinite;
+        }
+        @keyframes petalFall {
+            0% {transform: translateY(-10vh) rotate(0deg);}
+            100% {transform: translateY(110vh) rotate(1080deg);}
         }
 
-        @keyframes twinkle {
-            from { opacity: 0.7; }
-            to { opacity: 1; }
+        /* 点击生成爱心 */
+        .heart {
+            position:fixed;
+            pointer-events:none;
+            z-index:4;
+            font-size:26px;
+            animation: heartFly 1.6s ease-out forwards;
+        }
+        @keyframes heartFly{
+            0%{opacity:1;transform: translateY(0) scale(1);}
+            100%{opacity:0;transform: translateY(-180px) scale(1.7);}
         }
 
-        /* 烟花画布 */
-        #fireworks {
-            position: fixed;
-            inset: 0;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        /* 飘落纸屑 */
-        .confetti {
-            position: fixed;
-            top: -20px;
-            width: 10px;
-            height: 14px;
-            opacity: 0.9;
-            z-index: 2;
-            animation: fall linear infinite;
-        }
-
-        @keyframes fall {
-            to {
-                transform: translateY(110vh) rotate(720deg);
-            }
-        }
-
-        /* 主内容 */
-        .main {
+        /* 主内容区域 */
+        .container {
             position: relative;
-            z-index: 3;
-            max-width: 720px;
-            margin: 0 auto;
-            padding: 60px 24px 80px;
-            text-align: center;
+            z-index:3;
+            max-width:680px;
+            margin:0 auto;
+            padding:70px 22px 90px;
+            text-align:center;
         }
 
-        .title {
-            font-family: "Ma Shan Zheng", "Noto Sans SC", cursive;
-            font-size: clamp(40px, 9vw, 72px);
-            letter-spacing: 8px;
-            background: linear-gradient(90deg, #ffe9a8, #ffb347, #ff7ab6);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 30px rgba(255, 210, 120, 0.35);
-            margin-bottom: 12px;
-            opacity: 0;
+        .main-title{
+            font-family:"ZCOOL KuaiLe", cursive;
+            font-size: clamp(42px,10vw,70px);
+            background:linear-gradient(90deg,#ff5e7c,#ff9460,#ffbc70);
+            -webkit-background-clip:text;
+            background-clip:text;
+            color:transparent;
+            margin-bottom:12px;
+            opacity:0;
             transform: translateY(-20px);
-            animation: titleIn 1.2s ease forwards;
+            animation: titlePop 1.2s ease-out forwards;
+        }
+        .sub-heading{
+            font-size:17px;
+            color:#b06b60;
+            letter-spacing:6px;
+            margin-bottom:48px;
+            opacity:0;
+            animation: fadeSoft 1.4s ease forwards 0.3s;
         }
 
-        .subtitle {
-            font-size: 16px;
-            color: #cfe3ff;
-            letter-spacing: 4px;
-            margin-bottom: 40px;
-            opacity: 0;
-            animation: fadeIn 1.5s ease forwards 0.4s;
+        /* 礼物模块 */
+        .gift-block{
+            margin-bottom:48px;
+            opacity:0;
+            animation: fadeSoft 1.4s ease forwards 0.5s;
+        }
+        .gift-box{
+            width:220px;
+            max-width:65%;
+            filter: drop-shadow(0 8px 18px rgba(255,120,135,0.25));
+        }
+        .wish-button{
+            margin-top:22px;
+            padding:14px 36px;
+            border-radius:999px;
+            border:none;
+            background:linear-gradient(135deg,#ff6b78,#ff4e72);
+            color:#fff;
+            font-size:16px;
+            font-weight:600;
+            letter-spacing:2px;
+            cursor:pointer;
+            box-shadow:0 10px 28px rgba(255,110,120,0.30);
+            transition: all 0.3s ease;
+        }
+        .wish-button:hover{
+            transform: translateY(-5px);
+            box-shadow:0 16px 36px rgba(255,110,120,0.38);
         }
 
-        /* 蛋糕区 */
-        .cake-section {
-            margin-bottom: 40px;
-            opacity: 0;
-            animation: fadeIn 1.5s ease forwards 0.6s;
+        /* 磨砂贺卡卡片 */
+        .note-card{
+            background:rgba(255,255,255,0.70);
+            border:1px solid rgba(255,255,255,0.85);
+            border-radius:32px;
+            padding:42px 36px;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 22px 55px rgba(180,120,110,0.15), 0 2px 8px rgba(255,255,255,0.6) inset;
+            text-align:left;
+            opacity:0;
+            transform: translateY(40px);
+            animation: cardSlideUp 1.4s ease forwards 0.8s;
         }
-
-        .cake-img {
-            width: 240px;
-            max-width: 70%;
-            filter: drop-shadow(0 10px 24px rgba(255, 180, 90, 0.45));
-            animation: float 4s ease-in-out infinite;
+        .note-card .note-top{
+            font-size:22px;
+            font-weight:600;
+            color:#e25868;
+            margin-bottom:22px;
         }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        .note-card p{
+            font-size:16px;
+            line-height:2.1;
+            color:#583c3e;
+            margin-bottom:18px;
         }
-
-        .wish-btn {
-            display: inline-block;
-            margin-top: 18px;
-            padding: 12px 28px;
-            border-radius: 999px;
-            border: none;
-            background: linear-gradient(90deg, #ff9a3c, #ff4d6d);
-            color: #fff;
-            font-size: 15px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            cursor: pointer;
-            box-shadow: 0 10px 24px rgba(255, 77, 109, 0.45);
-            transition: transform 0.3s ease;
-        }
-
-        .wish-btn:hover {
-            transform: translateY(-3px);
-        }
-
-        /* 贺卡 */
-        .card {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            border-radius: 24px;
-            padding: 36px 28px;
-            backdrop-filter: blur(14px);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
-            text-align: left;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: cardIn 1.5s ease forwards 0.9s;
-        }
-
-        .card p {
-            font-size: 16px;
-            line-height: 2;
-            color: #f5f8ff;
-            margin-bottom: 14px;
-            text-indent: 2em;
-        }
-
-        .card .greeting-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: #ffd86b;
-            text-indent: 0;
-            margin-bottom: 18px;
-        }
-
-        .card .signature {
-            text-align: right;
-            color: #cfe3ff;
-            text-indent: 0;
-            margin-top: 24px;
-        }
-
-        /* 蜡烛倒计时 */
-        .candles {
-            margin-top: 40px;
-            display: flex;
-            justify-content: center;
-            gap: 14px;
-            opacity: 0;
-            animation: fadeIn 1.5s ease forwards 1.2s;
-        }
-
-        .candle {
-            width: 14px;
-            height: 60px;
-            background: linear-gradient(180deg, #ffd166, #ff9a3c);
-            border-radius: 6px;
-            position: relative;
-            box-shadow: 0 0 12px rgba(255, 170, 70, 0.6);
-        }
-
-        .candle::before {
-            content: "";
-            position: absolute;
-            top: -18px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 14px;
-            height: 18px;
-            background: radial-gradient(circle at 50% 40%, #fff6c2, #ff9a3c 60%, #ff4d6d);
-            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-            animation: flame 0.3s ease-in-out infinite alternate;
-        }
-
-        @keyframes flame {
-            from { transform: translateX(-50%) scale(1); }
-            to { transform: translateX(-50%) scale(1.15); }
+        .note-card .sign-off{
+            margin-top:32px;
+            text-align:right;
+            color:#946466;
+            font-style:italic;
         }
 
         /* 动画 */
-        @keyframes titleIn {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes titlePop{
+            to{opacity:1;transform:translateY(0);}
+        }
+        @keyframes cardSlideUp{
+            to{opacity:1;transform:translateY(0);}
+        }
+        @keyframes fadeSoft{
+            to{opacity:1;}
         }
 
-        @keyframes cardIn {
-            to {
-                opacity: 1;
-                transform: translateY(0);
+        /* 移动端适配 */
+        @media(max-width:580px){
+            .note-card{
+                padding:30px 24px;
             }
-        }
-
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-
-        /* 响应式 */
-        @media (max-width: 600px) {
-            .card {
-                padding: 28px 20px;
+            .note-card p{
+                font-size:15px;
             }
-
-            .card p {
-                font-size: 15px;
-            }
-
-            .candles {
-                gap: 10px;
-            }
-
-            .candle {
-                width: 10px;
-                height: 46px;
+            .sub-heading{
+                letter-spacing:3px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="stars"></div>
-    <canvas id="fireworks"></canvas>
 
-    <div class="main">
-        <h1 class="title">生日快乐</h1>
-        <p class="subtitle">HAPPY BIRTHDAY · 许下心愿，闪闪发光</p>
+    <div class="container">
+        <h1 class="main-title">生日快乐，宝贝</h1>
+        <p class="sub-heading">HAPPY BIRTHDAY · 岁岁有我，年年是你</p>
 
-        <div class="cake-section">
-            <img class="cake-img" src="https://i.ibb.co/jPQGWsLV/Camera-XHS-1767015404692-1.jpg" alt="生日蛋糕" />
-            <br />
-            <!-- 修改：点击跳转到 wish.html -->
-            <button class="wish-btn" onclick="location.href='wish.html'">✨ 许个愿</button>
+        <div class="gift-block">
+            <svg class="gift-box" viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg">
+                <rect x="25" y="70" width="150" height="100" rx="8" fill="#ff7887"/>
+                <rect x="85" y="70" width="30" height="100" fill="#ffd0d6"/>
+                <rect x="15" y="45" width="170" height="30" rx="6" fill="#ff8c9a"/>
+                <path d="M100 10 C130 35,160 35,100 60 C40 35,70 35,100 10" fill="#ffb4bc"/>
+            </svg>
+            <br>
+            <button class="wish-button" onclick="location.href='wish.html'">💌 许下心愿</button>
         </div>
 
-        <div class="card">
-            <p class="greeting-title">to 我的朋友：</p>
-
-            <p>今天是专属于你的日子。愿新的一岁，你被温柔包围，被幸运偏爱，被这个世界认真地爱着。愿你眼里有光，心中有梦，脚下有路，身边一直有温暖。</p>
-
-            <p>很庆幸生命里有你这样的朋友。不用每天联系，却总在重要时刻想起彼此；不用刻意解释，也能懂对方那些没说出口的情绪。时间会过去，但真正的情谊不会。</p>
-
-            <p>新的一岁，愿你更勇敢，也更自由。去做想做的事，去成为想成为的人，去把普通的日子过成值得回忆的样子。就算遇到风雨，也别忘了你比自己想象中更有力量。</p>
-
-            <p>愿你平安、健康、快乐。愿所有美好，都如约而至。</p>
-            <p class="signature">—— Your friend</p>
-            <p class="signature">生日当天</p>
+        <div class="note-card">
+            <p class="note-top">致我最爱的女孩：</p>
+            <p>生日快乐，我的宝贝。很幸运可以陪你度过又一个生日，能参与你的人生，是我最珍贵的小幸福。</p>
+            <p>愿新的一岁，你不用被世俗约束，可以安心做自己。希望你永远被爱包围，眼里永远保有星光，难过时有依靠，开心有人和你分享。</p>
+            <p>我会一直在你身边，陪你看人间烟火，陪你经历平凡日常，也陪你奔赴所有浪漫与远方。不管未来怎样，我都会坚定站在你的身后。</p>
+            <p>愿你平安健康，永远漂亮，永远热爱生活。所有的美好和温柔，都奔你而来。</p>
+            <p class="sign-off">永远爱你的人❤️<br>你的专属生辰</p>
         </div>
-
-        <div class="candles" id="candles"></div>
     </div>
 
     <script>
-        // 生成蜡烛数量
-        const candlesContainer = document.getElementById("candles");
-        const candleCount = 7;
-        for (let i = 0; i < candleCount; i++) {
-            const candle = document.createElement("div");
-            candle.className = "candle";
-            candlesContainer.appendChild(candle);
+        // 飘落花瓣
+        function createPetal(){
+            const petal = document.createElement("div");
+            petal.className="petal";
+            petal.style.left = Math.random()*100+"vw";
+            petal.style.background = ["#ffb8c1","#ffd2b3","#ffc4d8","#ffd7cd"][Math.floor(Math.random()*4)];
+            petal.style.animationDuration = (4 + Math.random()*4)+"s";
+            document.body.appendChild(petal);
+            setTimeout(()=>petal.remove(),8000);
         }
+        setInterval(createPetal,260);
 
-        // 烟花效果
-        const canvas = document.getElementById("fireworks");
-        const ctx = canvas.getContext("2d");
-        let particles = [];
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        resizeCanvas();
-        window.addEventListener("resize", resizeCanvas);
-
-        class Particle {
-            constructor(x, y, color) {
-                this.x = x;
-                this.y = y;
-                this.speedX = (Math.random() - 0.5) * 6;
-                this.speedY = (Math.random() - 0.5) * 6;
-                this.color = color;
-                this.life = 100;
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                this.speedY += 0.04;
-                this.life--;
-            }
-            draw() {
-                ctx.globalAlpha = this.life / 100;
-                ctx.fillStyle = this.color;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        function createFirework(x, y) {
-            const colors = ["#ff4d6d", "#ffd166", "#ff9a3c", "#b6e3ff", "#c780fa", "#7affc1"];
-            const color = colors[Math.floor(Math.random() * colors.length)];
-            for (let i = 0; i < 60; i++) {
-                particles.push(new Particle(x, y, color));
-            }
-        }
-
-        function animateFireworks() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles = particles.filter(p => p.life > 0);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-            requestAnimationFrame(animateFireworks);
-        }
-        animateFireworks();
-
-        // 自动烟花
-        setInterval(() => {
-            const x = Math.random() * canvas.width;
-            const y = canvas.height * 0.2 + Math.random() * canvas.height * 0.3;
-            createFirework(x, y);
-        }, 1200);
-
-        // 点击烟花
-        document.addEventListener("click", (e) => {
-            createFirework(e.clientX, e.clientY);
-        });
-
-        // 许愿按钮函数删掉，直接跳转页面
-        /*
-        function makeAWish() {
-            for (let i = 0; i < 4; i++) {
-                setTimeout(() => {
-                    const x = canvas.width / 2 + (Math.random() - 0.5) * 200;
-                    const y = canvas.height * 0.3 + Math.random() * 100;
-                    createFirework(x, y);
-                }, i * 300);
-            }
-        }
-        */
-
-        // 生成彩色纸屑
-        function createConfetti() {
-            const confetti = document.createElement("div");
-            confetti.className = "confetti";
-            confetti.style.left = Math.random() * 100 + "vw";
-            confetti.style.background = ["#ff4d6d", "#ffd166", "#ff9a3c", "#b6e3ff", "#c780fa"][Math.floor(Math.random() * 5)];
-            confetti.style.animationDuration = (3 + Math.random() * 3) + "s";
-            document.body.appendChild(confetti);
-            setTimeout(() => confetti.remove(), 6000);
-        }
-
-        setInterval(createConfetti, 300);
+        // 点击页面飘爱心
+        document.addEventListener("click",(ev)=>{
+            const heart = document.createElement("div");
+            heart.className="heart";
+            heart.innerText=["❤️","🧡","💛","💖","💝"][Math.floor(Math.random()*5)];
+            heart.style.left = ev.clientX+"px";
+            heart.style.top = ev.clientY+"px";
+            document.body.appendChild(heart);
+            setTimeout(()=>heart.remove(),1600);
+        })
     </script>
 </body>
 </html>
